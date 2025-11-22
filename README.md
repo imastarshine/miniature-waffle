@@ -3,6 +3,14 @@
 A simple, customizable Pomodoro Timer built with **Flet**.  
 Track your work/rest sessions, view statistics, and tailor the timer to your needs.
 
+## Screenshots
+
+<div align="center">
+  <img src="assets/screenshots/preview_1.png" alt="Cyan Theme" width="32%">
+  <img src="assets/screenshots/preview_2.png" alt="Yellow Theme" width="32%">
+  <img src="assets/screenshots/preview_3.png" alt="Green Theme" width="32%">
+</div>
+
 ## Features
 
 - Session tracking and data persistence  
@@ -65,10 +73,10 @@ You can bundle the app into a Windows executable
 Flet provides a built-in command to build desktop executables without relying on PyInstaller
 
 ```bash
-flet build windows ^
-  --product "product" ^
-  --description "description" ^
-  --module-name main.py ^
+flet build windows `
+  --product "product" `
+  --description "description" `
+  --module-name main.py `
   --output dist
 ```
 

@@ -2,3 +2,5 @@ data/config.json
 data/tracking_data.json
 .idea/
 .venv/
+/build/
+/dist/
