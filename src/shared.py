@@ -1,4 +1,13 @@
+import os
 from datetime import datetime
+
+
+def get_user_data_filepath(filename: str) -> str:
+    data_dir = os.getenv("FLET_APP_STORAGE_DATA")
+    if data_dir is None:
+        data_dir = "data"
+    os.makedirs(data_dir, exist_ok=True)
+    return os.path.join(data_dir, filename)
 
 
 def get_today() -> str:

@@ -1,16 +1,16 @@
 [project]
-name = "Miniature Waffle"
-version = "1.0.1"
+name = "Miniature-Waffle"
+version = "1.0.2"
 description = "Pomodoro Timer using Flet"
 authors = [
     {name = "starshine"}
 ]
-license = {text = "MIT"}
+license = {text = "Apache License, Version 2.0"}
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "flet (>=0.28.3,<0.29.0)",
-    "flet-audio (>=0.1.0,<0.2.0)"
+    "flet-audio (>=0.1.0,<0.2.0)",
 ]
 
 
@@ -23,3 +23,6 @@ product = "Miniature Waffle"
 build_number = 1
 app.module = "main"
 compile.packages = true
+
+[tool.pyinstaller.datas]
+"assets" = "assets"

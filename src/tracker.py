@@ -2,20 +2,9 @@ import json
 import os
 
 from enum import Enum
-from datetime import datetime
 from dataclasses import dataclass, asdict, field
 
-
-def get_today() -> str:
-    now_aware = datetime.now().astimezone()
-    start_of_day = now_aware.replace(hour=0, minute=0, second=0, microsecond=0)
-    return start_of_day.isoformat()
-
-
-def get_time() -> str:
-    now_naive = datetime.now()
-    time_aware = now_naive.astimezone()
-    return time_aware.isoformat()
+from src.shared import get_user_data_filepath, get_today, get_time
 
 
 class DataType(Enum):
@@ -29,6 +18,15 @@ class DataType(Enum):
 @dataclass
 class Tracker:
     data: dict = field(default_factory=dict)
+    config_path: str = field(
+        default="",
+        init=False,
+        repr=False,
+        compare=False
+    )
+
+    def __post_init__(self):
+        self.tracking_data_path = get_user_data_filepath("tracking_data.json")
 
     @staticmethod
     def normalize_type(value: str | DataType) -> DataType:
@@ -66,13 +64,12 @@ class Tracker:
         self._create_json_file()
 
     def load(self):
-        if not os.path.exists("data/tracking_data.json"):
+        if not os.path.exists(self.tracking_data_path):
             self._create_json_file()
-        with open("data/tracking_data.json", "r", encoding="utf-8") as s_file:
+        with open(self.tracking_data_path, "r", encoding="utf-8") as s_file:
             for key, value in json.load(s_file).items():
                 setattr(self, key, value)
 
     def _create_json_file(self):
-        with open("data/tracking_data.json", "w", encoding="utf-8") as c_file:
+        with open(self.tracking_data_path, "w", encoding="utf-8") as c_file:
             json.dump(asdict(self), c_file)
-

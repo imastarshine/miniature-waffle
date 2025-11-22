@@ -1,11 +1,13 @@
 import json
 import os
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
+
+from src.shared import get_user_data_filepath
 
 
 @dataclass
 class Config:
-    color_scheme: str = "pink"
+    color_scheme: str = "cyan"
     theme_mode: str = "system"
 
     background_image_path: str = ""
@@ -19,16 +21,26 @@ class Config:
     short_break_time: int = 300
     long_break_time: int = 900
 
+    config_path: str = field(
+        default="",
+        init=False,
+        repr=False,
+        compare=False
+    )
+
+    def __post_init__(self):
+        self.config_path = get_user_data_filepath("config.json")
+
     def save(self):
         self._create_json_file()
 
     def load(self):
-        if not os.path.exists("data/config.json"):
+        if not os.path.exists(self.config_path):
             self._create_json_file()
-        with open("data/config.json", "r") as s_file:
+        with open(self.config_path, "r") as s_file:
             for key, value in json.load(s_file).items():
                 setattr(self, key, value)
 
     def _create_json_file(self):
-        with open("data/config.json", "w") as c_file:
+        with open(self.config_path, "w") as c_file:
             json.dump(asdict(self), c_file)

@@ -127,6 +127,7 @@ def main(page: ft.Page):
 
     random_hash = hashlib.md5(str(time.time()).encode()).hexdigest()[:8]
     page.title = f"Miniature Waffle | {random_hash}"
+    page.window.prevent_close = True
 
     page.spacing = 0
     page.padding = 0
@@ -156,6 +157,13 @@ def main(page: ft.Page):
     }
 
     countdown_thread: CountdownThread = None
+
+    def on_window_event(e: ft.WindowEvent):
+        if e.data == "close":
+            config.save()
+            tracker.save()
+            page.update()
+            page.window.destroy()
 
     def easy_picker(pick_id: str, dialog_title: str = "Pick a file", file_type: ft.FilePickerFileType = None, allow_multiple: bool = False):
         nonlocal picker_id
@@ -592,16 +600,16 @@ def main(page: ft.Page):
 
     # --=========== OTHER ===========-- #
 
+    page.window.on_event = on_window_event
     pick_files_dialog.on_result = easy_picker_result
 
     page.overlay.append(audio)
     page.add(main_container)
 
+    # Add: ft.Text(str(os.getenv("FLET_APP_STORAGE_DATA"))) to settings
     page.run_thread(changer, os.path.abspath("assets/icon.ico"), page.title)
     page.update()
 
 
 if __name__ == "__main__":
     ft.app(target=main)
-    config.save()
-    tracker.save()
