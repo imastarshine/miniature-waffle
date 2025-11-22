@@ -1,0 +1,25 @@
+[project]
+name = "Miniature Waffle"
+version = "1.0.0"
+description = "Pomodoro Timer using Flet"
+authors = [
+    {name = "starshine"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flet (>=0.28.3,<0.29.0)",
+    "flet-audio (>=0.1.0,<0.2.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.flet]
+product = "Miniature Waffle"
+build_number = 1
+app.module = "main"
+compile.packages = true
