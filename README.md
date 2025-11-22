@@ -30,8 +30,8 @@ Track your work/rest sessions, view statistics, and tailor the timer to your nee
 
 1. Clone the repository:  
    ```bash
-   git clone https://your-repo-url.git
-   cd your-repo-directory
+   git clone https://github.com/imastarshine/miniature-waffle.git
+   cd miniature-waffle
    ```
 
 2. Create and activate a virtual environment with Poetry:
