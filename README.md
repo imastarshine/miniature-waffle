@@ -11,6 +11,11 @@ Track your work/rest sessions, view statistics, and tailor the timer to your nee
   <img src="assets/screenshots/preview_3.png" alt="Green Theme" width="32%">
 </div>
 
+## Notes
+
+* **Temporary White Screen on Launch (.exe):**
+  When launching the compiled `.exe` application, you may see a white screen for a brief period. This is normal behavior while the application loads and initializes its resources. **Please wait a few seconds (e.g., 5-10 seconds) for the main window to appear.**
+
 ## Features
 
 - Session tracking and data persistence  
