@@ -46,6 +46,8 @@ Track your work/rest sessions, view statistics, and tailor the timer to your nee
    ```bash
    poetry run python main.py
    ```
+   Or
+   If you are on Windows, launch `start.bat`
 
 ### Using pip and venv
 
