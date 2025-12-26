@@ -50,17 +50,6 @@ class TrackerWatcher:
 
         total_duration = end_dt.timestamp() - start_dt.timestamp()
 
-        now = datetime.now()
-        today = now.date()
-        yesterday = today - timedelta(days=1)
-
-        # if start_dt.date() == today:
-        #     day_label = "Today"
-        # elif start_dt.date() == yesterday:
-        #     day_label = "Yesterday"
-        # else:
-        #     day_label = start_dt.strftime("%d %b %Y")
-
         hours = int(total_duration // 3600)
         minutes = int((total_duration % 3600) // 60)
         duration_text = f"{hours}h {minutes}m"
@@ -88,40 +77,57 @@ class TrackerWatcher:
 
         total_pauses_bool = total_pauses > 0
         short_task_bool = short_task is not None
-
-        if total_pauses_bool or short_task_bool is not None:
-            content = ft.Column([header_row], spacing=4)
-
-            if total_pauses_bool:
-                pause_row = ft.Row(
+        content = ft.Column(
+            [
+                ft.Row(
                     [
-                        ft.Container(width=21),
-                        ft.Icon(ft.Icons.PAUSE, size=13),
-                        ft.Text(f"{total_pauses} Pause{'s' if total_pauses > 1 else ''}", size=13),
+                        ft.Icon(ft.Icons.CALENDAR_TODAY, size=13, opacity=0.8, color=ft.Colors.ON_SURFACE),
+                        ft.Container(width=2),
                         ft.Text(
-                            pause_duration_text,
-                            text_align=ft.TextAlign.RIGHT,
-                            expand=True,
-                            size=13,
-                            weight=ft.FontWeight.W_200
+                            start_dt.strftime("%H:%M"), size=13, opacity=0.8
+                        ),
+                        ft.Icon(ft.Icons.ARROW_RIGHT, size=16, opacity=0.8, color=ft.Colors.ON_SURFACE),
+                        ft.Text(
+                            end_dt.strftime("%H:%M"), size=13, opacity=0.8
                         )
                     ],
-                    spacing=6
-                )
-                content.controls.append(pause_row)
-            if short_task_bool and short_task != "":
-                short_task_row = ft.Row(
-                    [
-                        ft.Container(width=21),
-                        ft.Icon(ft.Icons.EDIT, size=13),
-                        ft.Text(short_task, size=13)
-                    ],
-                    spacing=6
-                )
-                content.controls.append(short_task_row)
-        else:
-            content = header_row
+                    spacing=2
+                ),
+                header_row
+            ],
+            spacing=4
+        )
 
+        if total_pauses_bool:
+            pause_row = ft.Row(
+                [
+                    ft.Container(width=21),
+                    ft.Icon(ft.Icons.PAUSE, size=13),
+                    ft.Text(f"{total_pauses} Pause{'s' if total_pauses > 1 else ''}", size=13),
+                    ft.Text(
+                        pause_duration_text,
+                        text_align=ft.TextAlign.RIGHT,
+                        expand=True,
+                        size=13,
+                        weight=ft.FontWeight.W_200
+                    )
+                ],
+                spacing=6
+            )
+            content.controls.append(pause_row)
+        if short_task_bool and short_task != "":
+            short_task_row = ft.Row(
+                [
+                    ft.Container(width=21),
+                    ft.Icon(ft.Icons.EDIT, size=13),
+                    ft.Text(short_task, size=13)
+                ],
+                spacing=6
+            )
+            content.controls.append(short_task_row)
+
+        if len(session_column.controls) > 0:
+            session_column.controls.append(ft.Divider())
         session_column.controls.append(ft.Container(content=content))
 
     @staticmethod
